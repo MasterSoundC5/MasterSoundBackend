@@ -23,5 +23,4 @@ class CountrySchema(ma.Schema):
     iso = fields.String()
     name = fields.String()
     spanish_name = fields.String()
-    users = fields.Nested('UserSchema', many=True)
 

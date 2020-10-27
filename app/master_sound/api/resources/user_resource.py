@@ -25,6 +25,7 @@ class SignUpResource(Resource):
             print(user)
             response = user_schema.dump(user)
         except Exception as e:
+            print('Error while processing response')
             print(e)
         return response, 201
 
