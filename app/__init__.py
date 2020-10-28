@@ -2,6 +2,7 @@ import sys
 
 from flask import Flask, jsonify
 from flask_restful import Api
+from flask_cors import CORS
 
 from app.common.error_handling import AppErrorBaseClass, ObjectNotFound
 from app.db import db
@@ -22,6 +23,8 @@ def create_app(settings_module):
     app.url_map.strict_slashes = False
     
     app.register_blueprint(master_sound_api)
+
+    CORS(app)
 
     register_error_handlers(app)
 
