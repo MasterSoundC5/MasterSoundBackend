@@ -19,8 +19,6 @@ def create_app(settings_module):
 
     Api(app, catch_all_404s=True)
 
-    sys.setrecursionlimit(5000)
-
     app.url_map.strict_slashes = False
     
     app.register_blueprint(master_sound_api)

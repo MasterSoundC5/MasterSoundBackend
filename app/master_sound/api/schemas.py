@@ -23,5 +23,29 @@ class CountrySchema(ma.Schema):
     iso = fields.String()
     name = fields.String()
     spanish_name = fields.String()
-    users = fields.Nested('UserSchema', many=True)
+
+
+class AlbumSchema(ma.Schema):
+    album_id = fields.Integer(dump_only=True)
+    spt_album_id = fields.String()
+    cover_image_url = fields.String()
+    name = fields.String()
+    songs = fields.Nested('SongSchema', many=True)
+    artists = fields.Nested('ArtistSchema', many=True)
+
+
+class ArtistSchema(ma.Schema):
+    artist_id = fields.Integer(dump_only=True)
+    spt_artist_id = fields.String()
+    cover_image_url = fields.String()
+    name = fields.String()
+
+
+class SongSchema(ma.Schema):
+    song_id = fields.Integer(dump_only=True)
+    spt_song_id = fields.String()
+    name = fields.String()
+    spt_album_id = fields.Integer()
+    duration = fields.Time()
+    album = fields.Nested('AlbumSchema')
 

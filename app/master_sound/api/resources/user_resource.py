@@ -1,5 +1,3 @@
-import sys
-
 from flask import request
 from flask_restful import Resource
 from flask_bcrypt import generate_password_hash, check_password_hash
@@ -22,7 +20,6 @@ class SignUpResource(Resource):
         except Exception as e:
             print(e)
         try:
-            print(user)
             response = user_schema.dump(user)
         except Exception as e:
             print(e)
