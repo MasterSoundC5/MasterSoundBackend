@@ -27,7 +27,7 @@ class AlbumListResource(Resource):
                 for item in data:
                     spt_album_id = item['id']
                     cover_image_url = item['images'][0]['url']
-                    name = item['name']
+                    album_name = item['name']
                     artists = []
                     for artist in item['artists']:
                         r_artist = requests.get(artist['href'], headers=header)
@@ -39,13 +39,13 @@ class AlbumListResource(Resource):
                             continue
                         artists.append({
                             'spt_artist_id': spt_artist_id,
-                            'name': artist_name,
+                            'artist_name': artist_name,
                             'cover_image_url': artist_cover_img_url
                            })
                     result.append({
                        'spt_album_id': spt_album_id,
                        'cover_image_url': cover_image_url,
-                       'name': name,
+                       'album_name': album_name,
                        'artists': artists
                        })
                 return result, 200
