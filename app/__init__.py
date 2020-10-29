@@ -3,11 +3,14 @@ import sys
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 
 from app.common.error_handling import AppErrorBaseClass, ObjectNotFound
 from app.db import db
 from app.master_sound.api.router import master_sound_api
 from .ext import ma, migrate
+from config.default import SECRET_KEY
 
 
 def create_app(settings_module):
@@ -18,6 +21,9 @@ def create_app(settings_module):
     ma.init_app(app)
     migrate.init_app(app, db)
 
+    bcrypt = Bcrypt(app)
+    jwt = JWTManager(app)
+
     Api(app, catch_all_404s=True)
 
     app.url_map.strict_slashes = False
@@ -27,6 +33,8 @@ def create_app(settings_module):
     CORS(app)
 
     register_error_handlers(app)
+
+    app.secret_key = SECRET_KEY
 
     return app
 
