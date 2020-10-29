@@ -35,7 +35,7 @@ class SongListResource(Resource):
                     'spt_album_id': spt_album_id,
                     'name': name,
                     'duration': duration,
-                    'played_song_number': 10
+                    'played_song_number': 10,
                     'sound_url': sound_url
                     })
                 order_number += 1
