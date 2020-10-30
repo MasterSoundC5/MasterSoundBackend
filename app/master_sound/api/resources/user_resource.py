@@ -19,7 +19,7 @@ class SignUpResource(Resource):
         user_dict = user_schema.load(data)
         user = User(**user_dict)
         country = Country.get_by_id(user_dict['country_id'])
-        user.country = country
+        user.country = country # Error
         print(SQLALCHEMY_DATABASE_URI)
         try:
             user.save()
