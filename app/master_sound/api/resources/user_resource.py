@@ -23,6 +23,7 @@ class SignUpResource(Resource):
             user.save()
         except Exception as e:
             print(e)
+            raise AppErrorBaseClass('There was an error while saving the data.')
         try:
             response = user_schema.dump(user)
         except Exception as e:
@@ -34,10 +35,8 @@ class LoginResource(Resource):
     def post(self):
         data = request.get_json()
         error = {'msg': 'Email or password invalid'}
-        print(data)
         try:
             user = User.simple_filter(email=data['email'])[0]
-            print('paso')
         except IndexError as e:
             print(e)
             return error, 200
