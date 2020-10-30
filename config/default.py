@@ -7,7 +7,7 @@ PROPAGATE_EXCEPTIONS = True
 # Database config
 SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://back-user:backend@35.225.122.24/mastersound?charset=utf8mb4'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SHOW_SQLALCHEMY_LOG_MESSAGES = False
+SHOW_SQLALCHEMY_LOG_MESSAGES = True
 
 ERROR_404_HELP = False
 

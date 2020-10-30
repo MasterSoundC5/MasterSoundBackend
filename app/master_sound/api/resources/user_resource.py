@@ -8,6 +8,7 @@ from flask_jwt_extended import create_access_token, jwt_required
 from app.common.error_handling import AppErrorBaseClass
 from ..schemas import UserSchema, CountrySchema
 from ...models import User, Country
+from config.default import SQLALCHEMY_DATABASE_URI
 
 user_schema = UserSchema()
 
@@ -19,6 +20,7 @@ class SignUpResource(Resource):
         user = User(**user_dict)
         country = Country.get_by_id(user_dict['country_id'])
         user.country = country
+        print(SQLALCHEMY_DATABASE_URI)
         try:
             user.save()
         except Exception as e:
