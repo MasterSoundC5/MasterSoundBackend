@@ -23,7 +23,7 @@ class SignUpResource(Resource):
             user.save()
         except Exception as e:
             print(e)
-            raise AppErrorBaseClass('There was an error while saving the data.')
+            raise AppErrorBaseClass('The email is already in use.')
         try:
             response = user_schema.dump(user)
         except Exception as e:
@@ -44,6 +44,7 @@ class LoginResource(Resource):
         authorized = check_password_hash(user.password, data['password'])
 
         if not authorized:
+            print('not authorized')
             return error, 200
 
         expires = timedelta(days=7)
