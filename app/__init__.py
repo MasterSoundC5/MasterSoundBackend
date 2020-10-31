@@ -14,7 +14,7 @@ from config.default import SECRET_KEY
 
 
 def create_app(settings_module):
-    app = Flask(__ ame__)
+    app = Flask(__name__)
     app.config.from_object(settings_module)
 
     db.init_app(app)
@@ -53,7 +53,7 @@ def register_error_handlers(app):
     def handle_403_error(e):
         return jsonify({'msg': 'Forbidden error'}), 403
 
-   @app.errorhandler(404)
+    @app.errorhandler(404)
     def handle_404_error(e):
         return jsonify({'msg': 'Not found error'}), 404
 
