@@ -12,6 +12,14 @@ albums_artists = db.Table(
         db.Column('album_id', db.Integer, db.ForeignKey('albums.album_id', ondelete='CASCADE'), nullable=False)
 )
 
+playlists_songs = db.Table(
+        'playlists_songs',
+        db.Model.metadata,
+        db.Column('playlists_songs_id', db.Integer, primary_key=True),
+        db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.playlist_id', ondelete='CASCADE'), nullable=False),
+        db.Column('song_id', db.Integer, db.ForeignKey('songs.song_id', ondelete='CASCADE'), nullable=False)
+)
+
 
 class Country(db.Model, BaseModelMixin):
     __tablename__ = 'countries'
@@ -73,4 +81,18 @@ class Song(db.Model, BaseModelMixin):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     active = db.Column(db.Integer, default=1)
     album = db.relationship('Album', back_populates='songs')
+    playlists = db.relationship('Playlist', back_populates='songs', secondary=playlists_songs, cascade='all, delete')
+
+
+class Playlist(db.Model, BaseModelMixin):
+    __tablename__ = 'playlists'
+
+    playlist_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+    playlist_name = db.Column(db.String(50))
+    favourite = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    active = db.Column(db.Integer, default=1)
+    songs = db.relationship('Song', back_populates='playlists', secondary=playlists_songs, passive_deletes=True)
 
