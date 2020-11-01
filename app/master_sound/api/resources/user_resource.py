@@ -35,12 +35,16 @@ class SignUpResource(Resource):
 
 class LoginResource(Resource):
     def post(self):
-        data = request.get_json()
+        try:
+            data = request.get_json()
+        except Exception as e:
+            raise AppErrorBaseClass('Check the json syntax.')
+
         error = {'msg': 'Email or password invalid'}
+
         try:
             user = User.simple_filter(email=data['email'])[0]
         except IndexError as e:
-            print(e)
             return error, 200
 
         authorized = check_password_hash(user.password, data['password'])
@@ -53,4 +57,11 @@ class LoginResource(Resource):
         access_token = create_access_token(identity=user.user_id, expires_delta=expires)
 
         return {'access_token': access_token, 'token_type': 'Bearer', 'expires_in': str(expires)}, 200
+
+
+class UserResource(Resource):
+    def get(self):
+        user = User.get_by_id(1)
+        result = user_schema.dump(user)
+        return result, 200
 
