@@ -40,7 +40,7 @@ class User(db.Model, BaseModelMixin):
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('countries.country_id', ondelete='CASCADE'), nullable=False)
-    birth_date = db.Column(db.Date, nullable=False)
+    image_url = db.Column(db.String(100), nullable=False)
     sex = db.Column(db.String(1), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -54,8 +54,11 @@ class Album(db.Model, BaseModelMixin):
     album_id = db.Column(db.Integer, primary_key=True)
     cover_image_url = db.Column(db.String(100))
     spt_album_id = db.Column(db.String(30), nullable=False, unique=True)
-    name = db.Column(db.String(40), nullable=False)
+    album_name = db.Column(db.String(40), nullable=False)
     songs = db.relationship('Song', back_populates='album', cascade='all, delete, delete-orphan', passive_deletes=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    active = db.Column(db.Integer, default=1)
     artists = db.relationship('Artist', back_populates='albums', secondary=albums_artists, cascade='all, delete')
 
 
@@ -64,8 +67,11 @@ class Artist(db.Model, BaseModelMixin):
 
     artist_id = db.Column(db.Integer, primary_key=True)
     spt_artist_id = db.Column(db.String(30), nullable=False, unique=True)
-    name = db.Column(db.String(50), nullable=False)
+    artist_name = db.Column(db.String(50), nullable=False)
     cover_image_url = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    active = db.Column(db.Integer, default=1)
     albums = db.relationship('Album', back_populates='artists', secondary=albums_artists, passive_deletes=True)
 
 
@@ -89,7 +95,7 @@ class Playlist(db.Model, BaseModelMixin):
 
     playlist_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
-    playlist_name = db.Column(db.String(50))
+    playlist_name = db.Column(db.String(50), nullable=False)
     favourite = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

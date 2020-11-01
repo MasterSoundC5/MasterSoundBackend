@@ -1,12 +1,10 @@
-import sys
-
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 
-from app.common.error_handling import AppErrorBaseClass, ObjectNotFound
+from app.common.error_handling import AppErrorBaseClass, ObjectNotFound, BadRequest
 from app.db import db
 from app.master_sound.api.router import master_sound_api
 from .ext import ma, migrate
@@ -64,4 +62,8 @@ def register_error_handlers(app):
     @app.errorhandler(ObjectNotFound)
     def handle_object_not_found_error(e):
         return jsonify({'msg': str(e)}), 404
+
+    @app.errorhandler(BadRequest)
+    def hanlde_bad_request_data_format(e):
+        return jsonify({'msg': str(e)}), 400
 

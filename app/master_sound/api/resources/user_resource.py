@@ -3,14 +3,14 @@ from datetime import timedelta
 from flask import request
 from flask_restful import Resource
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, decode_token
 
-from app.common.error_handling import AppErrorBaseClass
+from app.common.error_handling import AppErrorBaseClass, BadRequest
 from ..schemas import UserSchema, CountrySchema
 from ...models import User, Country
 from config.default import SQLALCHEMY_DATABASE_URI
 
-user_schema = UserSchema()
+user_schema = UserSchema(exclude=['password'])
 
 class SignUpResource(Resource):
     def post(self):
@@ -60,8 +60,10 @@ class LoginResource(Resource):
 
 
 class UserResource(Resource):
-    def get(self):
-        user = User.get_by_id(1)
+    def get(self, user_id):
+        user = User.get_by_id(user_id)
+        if not user:
+            raise BadRequest('The user id requested does not exist.')
         result = user_schema.dump(user)
         return result, 200
 
