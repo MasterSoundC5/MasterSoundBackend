@@ -49,3 +49,11 @@ class SongSchema(ma.Schema):
     duration = fields.Time()
     album = fields.Nested('AlbumSchema')
 
+
+class PlaylistSchema(ma.Schema):
+    playlist_id = fields.Integer(dump_only=True)
+    user_id = fields.Integer()
+    playlist_name = fields.String()
+    favourite = fields.Integer()
+    songs = fields.Nested('SongSchema', many=True)
+
