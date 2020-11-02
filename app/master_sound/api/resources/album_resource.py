@@ -15,7 +15,6 @@ album_schema = AlbumSchema(exclude=['songs'])
 class AlbumListResource(Resource):
     def get(self):
         albums = Album.get_all()[:15]
-        print(albums)
         results = album_schema.dump(albums, many=True)
         for result in results:
             result['artists'] = [result['artists'][0]]
