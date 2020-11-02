@@ -44,7 +44,7 @@ class ArtistSchema(ma.Schema):
 class SongSchema(ma.Schema):
     song_id = fields.Integer(dump_only=True)
     spt_song_id = fields.String()
-    name = fields.String()
+    song_name = fields.String()
     spt_album_id = fields.Integer()
     duration = fields.String()
     sound_url = fields.String()
