@@ -46,7 +46,9 @@ class SongSchema(ma.Schema):
     spt_song_id = fields.String()
     name = fields.String()
     spt_album_id = fields.Integer()
-    duration = fields.Time()
+    duration = fields.String()
+    sound_url = fields.String()
+    order_number = fields.Integer()
     album = fields.Nested('AlbumSchema')
 
 

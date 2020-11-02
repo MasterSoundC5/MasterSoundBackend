@@ -7,27 +7,30 @@ from flask_jwt_extended import create_access_token, jwt_required, decode_token
 
 from app.common.error_handling import AppErrorBaseClass, BadRequest
 from ..schemas import UserSchema, CountrySchema
-from ...models import User, Country
+from ...models import User, Country, Playlist
 from config.default import SQLALCHEMY_DATABASE_URI
 
-user_schema = UserSchema(exclude=['password'])
+user_schema_no_pswd = UserSchema(exclude=['password'])
+user_schema = UserSchema()
+
 
 class SignUpResource(Resource):
     def post(self):
         data = request.get_json()
         data['password'] = generate_password_hash(data['password']).decode('utf8')
         user_dict = user_schema.load(data)
+        print('a')
         user = User(**user_dict)
         country = Country.get_by_id(user_dict['country_id'])
         user.country = country # Error
-        print(SQLALCHEMY_DATABASE_URI)
+        user.playlists.append(Playlist(playlist_name='favourite', favourite=1))
         try:
             user.save()
         except Exception as e:
             print(e)
             raise AppErrorBaseClass('The email is already in use.')
         try:
-            response = user_schema.dump(user)
+            response = user_schema_no_pswd.dump(user)
         except Exception as e:
             print(e)
         return response, 201
@@ -64,6 +67,6 @@ class UserResource(Resource):
         user = User.get_by_id(user_id)
         if not user:
             raise BadRequest('The user id requested does not exist.')
-        result = user_schema.dump(user)
+        result = user_schema_no_pswd.dump(user)
         return result, 200
 
