@@ -10,7 +10,7 @@ class UserSchema(ma.Schema):
     email = fields.String()
     password = fields.String()
     country_id = fields.Integer()
-    birth_date = fields.String()
+    image_url = fields.String()
     sex = fields.String()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
@@ -29,7 +29,7 @@ class AlbumSchema(ma.Schema):
     album_id = fields.Integer(dump_only=True)
     spt_album_id = fields.String()
     cover_image_url = fields.String()
-    name = fields.String()
+    album_name = fields.String()
     songs = fields.Nested('SongSchema', many=True)
     artists = fields.Nested('ArtistSchema', many=True)
 
@@ -38,7 +38,7 @@ class ArtistSchema(ma.Schema):
     artist_id = fields.Integer(dump_only=True)
     spt_artist_id = fields.String()
     cover_image_url = fields.String()
-    name = fields.String()
+    artist_name = fields.String()
 
 
 class SongSchema(ma.Schema):
@@ -46,7 +46,9 @@ class SongSchema(ma.Schema):
     spt_song_id = fields.String()
     name = fields.String()
     spt_album_id = fields.Integer()
-    duration = fields.Time()
+    duration = fields.String()
+    sound_url = fields.String()
+    order_number = fields.Integer()
     album = fields.Nested('AlbumSchema')
 
 
