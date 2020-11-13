@@ -4,6 +4,11 @@ import requests
 
 from app.db import db, BaseModelMixin
 
+
+# TODO:
+# It's doesn't recommend handle migrations in the same file that the models
+# And the migrations should be handle with scripts
+
 albums_artists = db.Table(
         'albums_artists',
         db.Model.metadata,

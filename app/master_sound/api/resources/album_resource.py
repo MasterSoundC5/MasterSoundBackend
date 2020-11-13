@@ -20,6 +20,9 @@ class AlbumListResource(Resource):
             result['artists'] = [result['artists'][0]]
         return results, 200
 
+    # TODO:
+    # This method is large and hard to read
+    # Is possible use global try/catch
     def post(self):
         data = request.get_json()
         for _json in data:

@@ -7,6 +7,8 @@ from app.common.error_handling import AppErrorBaseClass
 
 def get_token():
     BASE_TOKEN_URL = 'https://accounts.spotify.com/api/token'
+    # TODO:
+    # Put tokens in code it's bad practice
     CLIENT_ID = 'aba92b636b61480c992f35aa022405f7'
     CLIENT_SECRET = '1d4db40d8e304d43bce78d5bea3d9751'
     client_str = f'{CLIENT_ID}:{CLIENT_SECRET}'
